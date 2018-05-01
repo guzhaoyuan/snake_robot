@@ -2,6 +2,12 @@
 
 a 7-DoF snake robot, using dynamixel MX-28AR, ROS Control.
 
+## TODO
+
+- [ ] implement position and velocity interface
+- [ ] drive one motor
+- [ ] resource management
+
 ## Resources
 
 - [eManual](http://support.robotis.com/en/product/actuator/dynamixel/mx_series/mx-28(2.0).htm)

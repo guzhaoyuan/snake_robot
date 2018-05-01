@@ -1,17 +1,18 @@
 #include <snakeHW.h>
-#include <controller_manager/controller_manager.h>
+#include <iostream>
 
 int main()
 {
-  MyRobot robot;
-  //controller_manager::ControllerManager cm(&robot);
-
-  while (true)
-  {
-     //robot.read();
-     //cm.update(robot.get_time(), robot.get_period());
-     //robot.write();
-     //sleep(5);
-  }
-  return 0;
+	Snake snake;
+	// controller_manager::ControllerManager cm(&snake);
+	int i = 0;
+	while (true)
+	{
+		snake.read();
+		//cm.update(snake.get_time(), snake.get_period());
+		snake.write();
+		std::cout << "round " << ++i << std::endl;
+		sleep(1);
+	}
+	return 0;
 }
