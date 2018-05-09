@@ -2,6 +2,14 @@
 
 a 7-DoF snake robot, using dynamixel MX-28AR, ROS Control.
 
+## Design
+
+![single DoF](meta/gif/single.gif)
+
+![double DoF](meta/gif/double.gif)
+
+![snake](meta/gif/snake.gif)
+
 ## TODO
 
 - [ ] implement position and velocity interface
