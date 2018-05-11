@@ -10,6 +10,10 @@ a 7-DoF snake robot, using dynamixel MX-28AR, ROS Control.
 
 ![snake](meta/gif/snake.gif)
 
+## Demo
+
+Gravity Compensation, using known snake model and current pose state to apply force on each joint, thus to compensate the gravity efforts.
+
 ## TODO
 
 - [ ] implement position and velocity interface
