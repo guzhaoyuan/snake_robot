@@ -1,6 +1,20 @@
 # Snake Robot
 
-a 7-DoF snake robot, using dynamixel MX-28AR, ROS Control.
+a 7-DoF snake robot.
+Robotis Dynamixel MX-28AR, Protocol1.0.
+Ubuntu 16.04 LTS, ROS kinetic, ROS Control.
+
+## install
+
+	git clone https://github.com/ROBOTIS-GIT/DynamixelSDK.git
+	cd DynamixelSDK/build/linux64
+	make
+	sudo make install
+	cd ~
+	git clone https://github.com/guzhaoyuan/snake_robot.git
+	cd snake_robot/test
+	make
+	./ping
 
 ## Design
 

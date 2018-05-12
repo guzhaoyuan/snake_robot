@@ -1,32 +1,8 @@
-##################################################
-# PROJECT: DXL Protocol 2.0 ping Example Makefile
-# AUTHOR : ROBOTIS Ltd.
-##################################################
-
-#---------------------------------------------------------------------
-# Makefile template for projects using DXL SDK
-#
-# Please make sure to follow these instructions when setting up your
-# own copy of this file:
-#
-#   1- Enter the name of the target (the TARGET variable)
-#   2- Add additional source files to the SOURCES variable
-#   3- Add additional static library objects to the OBJECTS variable
-#      if necessary
-#   4- Ensure that compiler flags, INCLUDES, and LIBRARIES are
-#      appropriate to your needs
-#
-#
-# This makefile will link against several libraries, not all of which
-# are necessarily needed for your project.  Please feel free to
-# remove libaries you do not need.
-#---------------------------------------------------------------------
-
 # *** ENTER THE TARGET NAME HERE ***
 TARGET      = ping
 
 # important directories used by assorted rules and other variables
-DIR_DXL    = ../../../..
+DIR_DXL    = ..
 DIR_OBJS   = .objects
 
 # compiler options
@@ -69,10 +45,10 @@ clean:
 make_directory:
 	mkdir -p $(DIR_OBJS)/
 
-$(DIR_OBJS)/%.o: ../%.c
+$(DIR_OBJS)/%.o: %.c
 	$(CC) $(CCFLAGS) -c $? -o $@
 
-$(DIR_OBJS)/%.o: ../%.cpp
+$(DIR_OBJS)/%.o: %.cpp
 	$(CX) $(CXFLAGS) -c $? -o $@
 
 #---------------------------------------------------------------------

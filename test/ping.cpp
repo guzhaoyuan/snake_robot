@@ -1,5 +1,28 @@
+/*******************************************************************************
+* Copyright 2017 ROBOTIS CO., LTD.
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*******************************************************************************/
+
+/* Author: Ryu Woon Jung (Leon) */
+
 //
-// Be sure that Dynamixel properties are already set as %% ID : 1 / Baudnum : 1 (Baudrate : 57600)
+// *********     ping Example      *********
+//
+//
+// Available Dynamixel model on this example : All models using Protocol 1.0
+// This example is tested with a Dynamixel MX-28, and an USB2DYNAMIXEL
+// Be sure that Dynamixel MX properties are already set as %% ID : 1 / Baudnum : 34 (Baudrate : 57600)
 //
 
 #if defined(__linux__) || defined(__APPLE__)
@@ -11,15 +34,14 @@
 #endif
 
 #include <stdio.h>
-
-#include "dynamixel_sdk.h"                                  // Uses Dynamixel SDK library
+#include "dynamixel_sdk.h"                                   // Uses Dynamixel SDK library
 
 // Protocol version
-#define PROTOCOL_VERSION                2.0                 // See which protocol version is used in the Dynamixel
+#define PROTOCOL_VERSION                1.0                 // See which protocol version is used in the Dynamixel
 
 // Default setting
 #define DXL_ID                          1                   // Dynamixel ID: 1
-#define BAUDRATE                        57600
+#define BAUDRATE                        100000
 #define DEVICENAME                      "/dev/ttyUSB0"      // Check which port is being used on your controller
                                                             // ex) Windows: "COM1"   Linux: "/dev/ttyUSB0" Mac: "/dev/tty.usbserial-*"
 
