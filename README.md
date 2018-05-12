@@ -23,6 +23,6 @@ Gravity Compensation, using known snake model and current pose state to apply fo
 ## Resources
 
 - [eManual](http://support.robotis.com/en/product/actuator/dynamixel/mx_series/mx-28(2.0).htm)
-- [Protocol 2.0](https://github.com/ROBOTIS-GIT/DynamixelSDK)
+- [Protocol 1.0](https://github.com/ROBOTIS-GIT/DynamixelSDK)
 - [git manual](https://github.com/ROBOTIS-GIT/emanual/blob/master/docs/en/dxl/mx/mx-28-2.md)
 - [drawing](https://github.com/ROBOTIS-GIT/emanual/blob/master/docs/en/dxl/mx/mx-28-2.md#drawings)
