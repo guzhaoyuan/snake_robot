@@ -25,6 +25,8 @@ Ubuntu 16.04 LTS, ROS kinetic, ROS Control.
 	make
 	./ping
 
+Warning: before making any move, make sure the sorvo is not gonna interfere with anything to prevent damage or harm!!
+
 ## Design
 
 ![single DoF](meta/gif/single.gif)
