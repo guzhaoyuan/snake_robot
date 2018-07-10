@@ -51,3 +51,4 @@ Gravity Compensation, using known snake model and current pose state to apply fo
 - [Protocol 1.0](https://github.com/ROBOTIS-GIT/DynamixelSDK)
 - [git manual](https://github.com/ROBOTIS-GIT/emanual/blob/master/docs/en/dxl/mx/mx-28-2.md)
 - [drawing](https://github.com/ROBOTIS-GIT/emanual/blob/master/docs/en/dxl/mx/mx-28-2.md#drawings)
+- [ros dynamixel tutorial](http://wiki.ros.org/dynamixel_controllers/Tutorials/Creating%20a%20joint%20torque%20controller)
