@@ -37,7 +37,8 @@ Warning: before making any move, make sure the sorvo is not gonna interfere with
 
 ## Demo
 
-Gravity Compensation, using known snake model and current pose state to apply force on each joint, thus to compensate the gravity efforts.
+- [ ] Draw a circle using 2 joint.
+- [ ] Gravity Compensation, using known snake model and current pose state to apply force on each joint, thus to compensate the gravity efforts.
 
 ## TODO
 

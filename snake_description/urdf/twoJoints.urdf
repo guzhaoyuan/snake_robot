@@ -1,0 +1,33 @@
+<robot name="twoJointsSnake">
+	<link name="link1">
+		<visual>
+			<origin
+				xyz="0. 0. 0."
+				rpy="0 0 0"
+			/>
+			<geometry>
+				<mesh
+					filename="package://snake_robot/snake_description/meshes/servo.stl" />
+			</geometry>
+		</visual>
+	</link>
+
+	<link name="link2">
+		<visual>
+			<origin
+				xyz="0. 0. 50."
+				rpy="0 0 0"
+			/>
+			<geometry>
+				<mesh
+					filename="package://snake_robot/snake_description/meshes/servo.stl" />
+			</geometry>
+		</visual>
+	</link>
+
+	<joint name="joint1" type="continuous">
+		<parent link="link1"/>
+		<child link="link2"/>
+	</joint>
+
+</robot>
