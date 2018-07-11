@@ -1,32 +1,42 @@
 <robot name="twoJointsSnake">
-	<link name="link1">
+
+  <material name="Blue">
+    <color rgba="0.2 0.1 0.8 1.0"/>
+  </material>
+  <material name="Green">
+    <color rgba="0.22 0.32 0.14 1.0"/>
+  </material>
+
+	<link name="base_link">
 		<visual>
 			<origin
 				xyz="0. 0. 0."
-				rpy="0 0 0"
+				rpy="1.57079632679 0 1.57079632679"
 			/>
 			<geometry>
 				<mesh
-					filename="package://snake_robot/snake_description/meshes/servo.stl" />
+					filename="package://snake_robot/snake_description/meshes/servo.stl" scale="0.001 0.001 0.001"/>
 			</geometry>
+			<material name="Blue"/>
 		</visual>
 	</link>
 
 	<link name="link2">
 		<visual>
 			<origin
-				xyz="0. 0. 50."
-				rpy="0 0 0"
+				xyz="0. 0. 0.06"
+				rpy="1.57079632679 0 0."
 			/>
 			<geometry>
 				<mesh
-					filename="package://snake_robot/snake_description/meshes/servo.stl" />
+					filename="package://snake_robot/snake_description/meshes/servo.stl" scale="0.001 0.001 0.001"/>
 			</geometry>
+			<material name="Green"/>
 		</visual>
 	</link>
 
 	<joint name="joint1" type="continuous">
-		<parent link="link1"/>
+		<parent link="base_link"/>
 		<child link="link2"/>
 	</joint>
 
