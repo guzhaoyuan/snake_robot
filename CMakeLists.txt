@@ -142,6 +142,9 @@ include_directories(
 # add_executable(${PROJECT_NAME}_node src/snake_robot_node.cpp)
 add_executable(snake_robot src/main.cpp src/snakeHW.cpp)
 
+add_executable(circle_TwoJointPublisher src/circle_TwoJointPublisher.cpp)
+target_link_libraries(circle_TwoJointPublisher ${catkin_LIBRARIES})
+
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
