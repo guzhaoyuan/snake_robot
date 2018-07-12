@@ -6,7 +6,7 @@ Robotis Dynamixel MX-28AR, Protocol1.0.
 
 Ubuntu 16.04 LTS, ROS kinetic, ROS Control.
 
-## install
+## Install Dynamixel
 
 	# after insert usb2dynamixel
 	sudo chmod 777 /dev/ttyUSB0
@@ -18,12 +18,7 @@ Ubuntu 16.04 LTS, ROS kinetic, ROS Control.
 	make
 	sudo make install
 	
-	# run demo
-	cd ..
-	git clone https://github.com/guzhaoyuan/snake_robot.git
-	cd snake_robot/test
-	make
-	./ping
+	# install ros kinetic
 
 Warning: before making any move, make sure the sorvo is not gonna interfere with anything to prevent damage or harm!!
 
@@ -37,7 +32,18 @@ Warning: before making any move, make sure the sorvo is not gonna interfere with
 
 ## Demo
 
-- [ ] Draw a circle using 2 joint.
+- [x] ping servo.
+
+	cd workspace
+	git clone https://github.com/guzhaoyuan/snake_robot.git
+	cd snake_robot/test
+	make
+	./ping
+
+- [x] Draw a circle using 2 joint.
+
+	roslaunch snake_robot display_twoJointsSnake.launch 
+
 - [ ] Gravity Compensation, using known snake model and current pose state to apply force on each joint, thus to compensate the gravity efforts.
 
 ## TODO

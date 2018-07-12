@@ -2,23 +2,25 @@
 #include "std_msgs/Header.h"
 #include "sensor_msgs/JointState.h"
 
+#define updateRate 20
+#define pi 3.1415926
+#define precision 100
 
 int main(int argc, char **argv){
 	ros::init(argc, argv, "circleTwoJointsPublisher");
 	ros::NodeHandle n;
 	ros::Publisher pub = n.advertise<sensor_msgs::JointState>("joint_states", 1000);
 
-  ros::Rate loop_rate(20);
+  ros::Rate loop_rate(updateRate);
 
   int count = 0;
   double theta = 0;
-  while(count<100 && ros::ok()){
+  while(count < precision && ros::ok()){
   	count++;
-  	theta += 3.1415926/100*2;
+  	theta += pi*2/precision;
 
   	std_msgs::Header head;
   	sensor_msgs::JointState circlePoint;
-  	head.seq = count;
   	head.stamp = ros::Time::now();
   	circlePoint.header = head;
 
@@ -31,8 +33,10 @@ int main(int argc, char **argv){
   	ros::spinOnce();//wait for callback
 
   	loop_rate.sleep();
-  	if(count==100)
-  		count=0;
+
+  	//to loop over and over again
+  	if(count == precision)
+  		count = 0;
   }
   return 0;
 }
