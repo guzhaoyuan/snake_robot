@@ -35,9 +35,30 @@
 		</visual>
 	</link>
 
+	<link name="link3">
+		<visual>
+			<origin
+				xyz="0. 0. 0.12"
+				rpy="1.57079632679 0 1.57079632679"
+			/>
+			<geometry>
+				<mesh
+					filename="package://snake_robot/snake_description/meshes/servo.stl" scale="0.001 0.001 0.001"/>
+			</geometry>
+			<material name="Green"/>
+		</visual>
+	</link>
+
 	<joint name="joint1" type="continuous">
 		<parent link="base_link"/>
 		<child link="link2"/>
 	</joint>
-
+	<joint name="joint2" type="continuous">
+		<origin
+			xyz="0. 0. 0."
+			rpy="0. 0. 1.57079632679"
+		/>
+		<parent link="link2"/>
+		<child link="link3"/>
+	</joint>
 </robot>
