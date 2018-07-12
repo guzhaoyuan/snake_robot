@@ -10,6 +10,9 @@ project(snake_robot)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
+  geometry_msgs
+  nav_msgs
+  tf
 )
 
 find_package(Boost REQUIRED COMPONENTS 
@@ -110,7 +113,7 @@ include_directories(include ${Boost_INCLUDE_DIR} ${catkin_INCLUDE_DIRS})
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES snake_robot
-  CATKIN_DEPENDS roscpp std_msgs controller_interface controller_manager_msgs hardware_interface pluginlib
+  CATKIN_DEPENDS roscpp std_msgs geometry_msgs nav_msgs controller_interface controller_manager_msgs hardware_interface pluginlib tf
 	DEPENDS Boost
 )
 
@@ -144,6 +147,9 @@ add_executable(snake_robot src/main.cpp src/snakeHW.cpp)
 
 add_executable(circle_TwoJointPublisher src/circle_TwoJointPublisher.cpp)
 target_link_libraries(circle_TwoJointPublisher ${catkin_LIBRARIES})
+
+add_executable(showpath src/showpath.cpp)
+target_link_libraries(showpath ${catkin_LIBRARIES})
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the

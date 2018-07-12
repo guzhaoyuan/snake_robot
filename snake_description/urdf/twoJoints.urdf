@@ -38,7 +38,7 @@
 	<link name="link3">
 		<visual>
 			<origin
-				xyz="0. 0. 0.12"
+				xyz="0. 0. 0.06"
 				rpy="1.57079632679 0 1.57079632679"
 			/>
 			<geometry>
@@ -55,7 +55,7 @@
 	</joint>
 	<joint name="joint2" type="continuous">
 		<origin
-			xyz="0. 0. 0."
+			xyz="0. 0. 0.06"
 			rpy="0. 0. 1.57079632679"
 		/>
 		<parent link="link2"/>
