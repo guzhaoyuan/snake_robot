@@ -148,6 +148,9 @@ add_executable(snake_robot src/main.cpp src/snakeHW.cpp)
 add_executable(circle_TwoJointPublisher src/circle_TwoJointPublisher.cpp)
 target_link_libraries(circle_TwoJointPublisher ${catkin_LIBRARIES})
 
+add_executable(circle_ThreeJointPublisher src/circle_ThreeJointPublisher.cpp)
+target_link_libraries(circle_ThreeJointPublisher ${catkin_LIBRARIES})
+
 add_executable(showpath src/showpath.cpp)
 target_link_libraries(showpath ${catkin_LIBRARIES})
 

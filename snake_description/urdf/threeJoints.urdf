@@ -70,7 +70,7 @@
 		<limit effort="0.01" lower="-1" upper="1" velocity="0.5"/>
 	</joint>
 
-<!-- 	<link name="link4">
+	<link name="link4">
 		<visual>
 			<origin
 				xyz="0. 0. 0.072"
@@ -82,8 +82,8 @@
 			</geometry>
 			<material name="Green"/>
 		</visual>
-	</link> -->
-<!-- 	<joint name="joint3" type="continuous">
+	</link>
+	<joint name="joint3" type="continuous">
 		<origin
 			xyz="0. 0. 0.072"
 			rpy="0. 0. 0."
@@ -92,6 +92,6 @@
 		<child link="link4"/>
 		<safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-1.5" soft_upper_limit="1.5"/>
 		<limit effort="0.01" lower="-1" upper="1" velocity="0.5"/>
-	</joint> -->
+	</joint>
 
 </robot>

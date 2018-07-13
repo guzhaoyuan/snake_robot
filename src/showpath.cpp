@@ -13,10 +13,16 @@
 
 main (int argc, char **argv)
 {
+
+    if(argc < 2){//meaning that show path should use param to show link
+        return -1;
+    }
+    std::string endLink = argv[1];
+
     ros::init (argc, argv, "showpath");
 
     ros::NodeHandle ph;
-    ros::Publisher path_pub = ph.advertise<nav_msgs::Path>("trajectory",1, true);
+    ros::Publisher path_pub = ph.advertise<nav_msgs::Path>("trajectory", 1, true);
 
     // listener store for 3s of tf data
     tf::TransformListener listener(ros::Duration(3));
@@ -35,7 +41,7 @@ main (int argc, char **argv)
         path.header = head2;
 
         geometry_msgs::PoseStamped relative_pose;
-        relative_pose.header.frame_id = "link3";
+        relative_pose.header.frame_id = endLink;
         relative_pose.header.stamp = current_time;
         relative_pose.pose.position.z = 0.072;// distance to link3 coordinate
         relative_pose.pose.orientation.w = 1;
