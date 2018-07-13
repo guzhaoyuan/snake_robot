@@ -21,8 +21,10 @@ Ubuntu 16.04 LTS, ROS kinetic, ROS Control.
 		sudo make install
 		
 		# get code
-		cd ..
+		cd ~/workspace/src
 		git clone https://github.com/guzhaoyuan/snake_robot.git
+		cd ..
+		catkin_make
 	
 
 Warning: before making any move, make sure the sorvo is not gonna interfere with anything to prevent damage or harm!!
@@ -47,7 +49,7 @@ Warning: before making any move, make sure the sorvo is not gonna interfere with
 
 		roslaunch snake_robot display_twoJointsSnake.launch 
 
-		![demo2](meta/pic/demo2.png)
+![demo2](meta/pic/demo2.png)
 
 - [ ] Draw a circle using 7 joint.
 - [ ] Gravity Compensation, using known snake model and current pose state to apply force on each joint, thus to compensate the gravity efforts.

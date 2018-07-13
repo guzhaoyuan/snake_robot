@@ -1,30 +1,4 @@
-/*******************************************************************************
-* Copyright 2017 ROBOTIS CO., LTD.
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*******************************************************************************/
-
-/* Author: Ryu Woon Jung (Leon) */
-
-//
-// *********     ping Example      *********
-//
-//
-// Available Dynamixel model on this example : All models using Protocol 1.0
-// This example is tested with a Dynamixel MX-28, and an USB2DYNAMIXEL
-// Be sure that Dynamixel MX properties are already set as %% ID : 1 / Baudnum : 34 (Baudrate : 57600)
-//
-
+//ping from id 1 to 7
 #if defined(__linux__) || defined(__APPLE__)
 #include <fcntl.h>
 #include <termios.h>
@@ -40,7 +14,7 @@
 #define PROTOCOL_VERSION                1.0                 // See which protocol version is used in the Dynamixel
 
 // Default setting
-#define DXL_ID                          1                   // Dynamixel ID: 1
+#define DXL_ID                          2                   // Dynamixel ID: 1
 #define BAUDRATE                        100000
 #define DEVICENAME                      "/dev/ttyUSB0"      // Check which port is being used on your controller
                                                             // ex) Windows: "COM1"   Linux: "/dev/ttyUSB0" Mac: "/dev/tty.usbserial-*"
@@ -138,19 +112,22 @@ int main()
 
   // Try to ping the Dynamixel
   // Get Dynamixel model number
-  dxl_comm_result = packetHandler->ping(portHandler, DXL_ID, &dxl_model_number, &dxl_error);
-  if (dxl_comm_result != COMM_SUCCESS)
-  {
-    printf("%s\n", packetHandler->getTxRxResult(dxl_comm_result));
+  for(int i = 1; i < 8; i++){
+    dxl_comm_result = packetHandler->ping(portHandler, i, &dxl_model_number, &dxl_error);
+    if (dxl_comm_result != COMM_SUCCESS)
+    {
+      printf("[ID:%03d] %s\n", i, packetHandler->getTxRxResult(dxl_comm_result));
+    }
+    else if (dxl_error != 0)
+    {
+      printf("[ID:%03d] %s\n", i, packetHandler->getRxPacketError(dxl_error));
+    }
+    else
+    {
+      printf("[ID:%03d] ping Succeeded. Dynamixel model number : %d\n", i, dxl_model_number);
+    }
   }
-  else if (dxl_error != 0)
-  {
-    printf("%s\n", packetHandler->getRxPacketError(dxl_error));
-  }
-  else
-  {
-    printf("[ID:%03d] ping Succeeded. Dynamixel model number : %d\n", DXL_ID, dxl_model_number);
-  }
+
 
   // Close port
   portHandler->closePort();

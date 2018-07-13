@@ -10,4 +10,5 @@
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find snake_robot)/snake_description/rviz/twoJoints.rviz" required="true"/>
   <node name="showpath" pkg="snake_robot" type="showpath"/>
+  
 </launch>
