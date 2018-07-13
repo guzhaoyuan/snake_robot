@@ -41,7 +41,7 @@ Warning: before making any move, make sure the sorvo is not gonna interfere with
 
 - [x] ping servo.
 
-		cd snake_robot/test
+		cd snake_robot/test/ping
 		make
 		./ping
 
@@ -56,6 +56,8 @@ Warning: before making any move, make sure the sorvo is not gonna interfere with
 
 ## TODO
 
+- [ ] put the snake in gazebo to see how it does in real world
+- [ ] IK for 2-DoF snake
 - [ ] implement position and velocity interface
 - [ ] drive one motor
 - [ ] resource management

@@ -37,7 +37,7 @@ main (int argc, char **argv)
         geometry_msgs::PoseStamped relative_pose;
         relative_pose.header.frame_id = "link3";
         relative_pose.header.stamp = current_time;
-        relative_pose.pose.position.z = 0.1;// distance to link3 coordinate
+        relative_pose.pose.position.z = 0.072;// distance to link3 coordinate
         relative_pose.pose.orientation.w = 1;
 
         geometry_msgs::PoseStamped base_pose;

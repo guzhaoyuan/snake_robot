@@ -24,7 +24,7 @@
 	<link name="link2">
 		<visual>
 			<origin
-				xyz="0. 0. 0.06"
+				xyz="0. 0. 0.072"
 				rpy="1.57079632679 0 0."
 			/>
 			<geometry>
@@ -38,7 +38,7 @@
 	<link name="link3">
 		<visual>
 			<origin
-				xyz="0. 0. 0.06"
+				xyz="0. 0. 0.072"
 				rpy="1.57079632679 0 1.57079632679"
 			/>
 			<geometry>
@@ -50,15 +50,24 @@
 	</link>
 
 	<joint name="joint1" type="continuous">
+		<origin
+			xyz="0. 0. 0."
+			rpy="0. 0. 0."
+		/>
 		<parent link="base_link"/>
 		<child link="link2"/>
+		<safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-1.5" soft_upper_limit="1.5"/>
+		<limit effort="0.01" lower="-1" upper="1" velocity="0.5"/>
 	</joint>
+
 	<joint name="joint2" type="continuous">
 		<origin
-			xyz="0. 0. 0.06"
+			xyz="0. 0. 0.072"
 			rpy="0. 0. 1.57079632679"
 		/>
 		<parent link="link2"/>
 		<child link="link3"/>
+		<safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-1.5" soft_upper_limit="1.5"/>
+		<limit effort="0.01" lower="-1" upper="1" velocity="0.5"/>
 	</joint>
 </robot>

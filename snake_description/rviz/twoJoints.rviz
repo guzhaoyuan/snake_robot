@@ -3,7 +3,8 @@ Panels:
     Help Height: 78
     Name: Displays
     Property Tree Widget:
-      Expanded: ~
+      Expanded:
+        - /TF1
       Splitter Ratio: 0.5
     Tree Height: 383
   - Class: rviz/Selection
@@ -88,10 +89,10 @@ Visualization Manager:
           Value: true
         link3:
           Value: true
-      Marker Scale: 0.5
+      Marker Scale: 0.200000003
       Name: TF
-      Show Arrows: true
-      Show Axes: false
+      Show Arrows: false
+      Show Axes: true
       Show Names: false
       Tree:
         base_link:
