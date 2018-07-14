@@ -1,8 +1,12 @@
 #include <snakeHW.h>
+#include "ros/ros.h"
 #include <iostream>
 
-int main()
+int main(int argc, char **argv)
 {
+	ros::init(argc, argv, "snakeHW");
+	ros::NodeHandle n;
+
 	Snake snake;
 	// controller_manager::ControllerManager cm(&snake);
 
@@ -13,7 +17,7 @@ int main()
 		//cm.update(snake.get_time(), snake.get_period());
 		snake.write();
 		std::cout << "round " << ++i << std::endl;
-		sleep(1);
+		ros::Duration(1).sleep();
 	}
 	return 0;
 }

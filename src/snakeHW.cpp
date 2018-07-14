@@ -9,15 +9,6 @@
 #endif
 
 #include <stdio.h>
-#include "dynamixel_sdk.h"                                   // Uses Dynamixel SDK library
-
-// Protocol version
-#define PROTOCOL_VERSION                1.0                 // See which protocol version is used in the Dynamixel
-
-// Default setting
-#define DXL_ID                          1                   // Dynamixel ID: 1
-#define BAUDRATE                        100000
-#define DEVICENAME                      "/dev/ttyUSB0"
 
 int getch()
 {
@@ -89,7 +80,44 @@ Snake::Snake(){
  configure();
 }
 
+Snake::~Snake(){
+	// Close port
+  portHandler->closePort();
+  std::cout<< "Leaving port closed\n";
+}
+
 bool Snake::read() const{
+	int dxl_comm_result = COMM_TX_FAIL;             // Communication result
+	uint8_t dxl_error = 0;                          // Dynamixel error
+	uint16_t dxl1_present_position = 0, dxl2_present_position = 0;                        // Present position
+
+	// Read Dynamixel#1 present position
+  dxl_comm_result = packetHandler->read2ByteTxRx(portHandler, DXL1_ID, ADDR_MX_PRESENT_POSITION, &dxl1_present_position, &dxl_error);
+  if (dxl_comm_result != COMM_SUCCESS)
+  {
+    printf("%s\n", packetHandler->getTxRxResult(dxl_comm_result));
+    return false;
+  }
+  else if (dxl_error != 0)
+  {
+    printf("%s\n", packetHandler->getRxPacketError(dxl_error));
+    return false;
+  }
+
+  // Read Dynamixel#2 present position
+  dxl_comm_result = packetHandler->read2ByteTxRx(portHandler, DXL2_ID, ADDR_MX_PRESENT_POSITION, &dxl2_present_position, &dxl_error);
+  if (dxl_comm_result != COMM_SUCCESS)
+  {
+    printf("%s\n", packetHandler->getTxRxResult(dxl_comm_result));
+    return false;
+  }
+  else if (dxl_error != 0)
+  {
+    printf("%s\n", packetHandler->getRxPacketError(dxl_error));
+    return false;
+  }
+
+  printf("[ID:%03d] PresPos:%03d\t[ID:%03d] PresPos:%03d\n", DXL1_ID, dxl1_present_position, DXL2_ID, dxl2_present_position);
   return true;
 }
 
@@ -98,9 +126,10 @@ void Snake::write(){
 }
 
 bool Snake::configure(){
-dynamixel::PortHandler *portHandler = dynamixel::PortHandler::getPortHandler(DEVICENAME);
-dynamixel::PacketHandler *packetHandler = dynamixel::PacketHandler::getPacketHandler(PROTOCOL_VERSION);
-int dxl_comm_result = COMM_TX_FAIL;             // Communication result
+	portHandler = dynamixel::PortHandler::getPortHandler(DEVICENAME);
+	packetHandler = dynamixel::PacketHandler::getPacketHandler(PROTOCOL_VERSION);
+
+	int dxl_comm_result = COMM_TX_FAIL;             // Communication result
 
   uint8_t dxl_error = 0;                          // Dynamixel error
   uint16_t dxl_model_number;                      // Dynamixel model number
@@ -149,10 +178,16 @@ int dxl_comm_result = COMM_TX_FAIL;             // Communication result
     }
   }
 
+  return true;
 
-  // Close port
-  portHandler->closePort();
+}
 
-  return 0;
-  
+bool start(){
+	return true;
+}
+void stop(){
+
+}
+void cleanup(){
+
 }
