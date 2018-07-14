@@ -55,21 +55,35 @@
   <build_depend>nav_msgs</build_depend>
   <build_depend>tf</build_depend>
 
-  <build_export_depend>roscpp</build_export_depend>
-  <build_export_depend>std_msgs</build_export_depend>
-  
+  <build_depend>eigen</build_depend>
+  <build_depend>moveit_core</build_depend>
+  <build_depend>moveit_ros_planning_interface</build_depend>
+  <build_depend>moveit_ros_perception</build_depend>
+  <build_depend>interactive_markers</build_depend>
+  <build_depend>geometric_shapes</build_depend>
+  <build_depend>moveit_visual_tools</build_depend>
+
   <depend>controller_interface</depend>
   <depend>controller_manager_msgs</depend>
   <depend>hardware_interface</depend>
   <depend>pluginlib</depend>
   
-  
+  <exec_depend>moveit_core</exec_depend>
+  <exec_depend>moveit_fake_controller_manager</exec_depend>
+  <exec_depend>moveit_ros_planning_interface</exec_depend>
+  <exec_depend>moveit_ros_perception</exec_depend>
+  <exec_depend>interactive_markers</exec_depend>
+  <exec_depend>moveit_visual_tools</exec_depend>
+  <exec_depend>joy</exec_depend>
   <exec_depend>roscpp</exec_depend>
   <exec_depend>std_msgs</exec_depend>
   <exec_depend>geometry_msgs</exec_depend>
   <exec_depend>nav_msgs</exec_depend>
   <exec_depend>tf</exec_depend>
 
+  <build_export_depend>roscpp</build_export_depend>
+  <build_export_depend>std_msgs</build_export_depend>
+  
   <!-- The export tag contains other, unspecified, tags -->
   <export>
     <!-- Other tools can request additional information be placed here -->

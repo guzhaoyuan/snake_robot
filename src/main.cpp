@@ -5,8 +5,9 @@ int main()
 {
 	Snake snake;
 	// controller_manager::ControllerManager cm(&snake);
+
 	int i = 0;
-	while (true)
+	while (ros::ok())
 	{
 		snake.read();
 		//cm.update(snake.get_time(), snake.get_period());

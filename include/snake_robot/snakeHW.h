@@ -1,4 +1,4 @@
-
+// currently support read and write for 2 joint snake
 #ifndef snakeHW_h
 #define snakeHW_h
 
@@ -13,7 +13,7 @@ public:
   Snake();
   bool configure();
   bool start();
-  bool read(); 
+  bool read() const; 
   void write();
   void stop();
   void cleanup();

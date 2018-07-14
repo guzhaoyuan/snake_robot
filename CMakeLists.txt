@@ -3,27 +3,35 @@ project(snake_robot)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
+add_compile_options(-std=c++11)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
+
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
   geometry_msgs
   nav_msgs
   tf
+  moveit_core
+  moveit_visual_tools
+  moveit_ros_planning
+  moveit_ros_planning_interface
+  pluginlib
+  geometric_shapes
 )
 
-find_package(Boost REQUIRED COMPONENTS 
-	thread
-)
-
-include_directories(include ${Boost_INCLUDE_DIR} ${catkin_INCLUDE_DIRS})
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
+if(NOT EIGEN3_INCLUDE_DIRS)
+  set(EIGEN3_INCLUDE_DIRS ${EIGEN3_INCLUDE_DIR})
+endif()
 
+find_package(Eigen3 REQUIRED)
+find_package(Boost REQUIRED COMPONENTS system filesystem date_time thread)
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -113,8 +121,20 @@ include_directories(include ${Boost_INCLUDE_DIR} ${catkin_INCLUDE_DIRS})
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES snake_robot
-  CATKIN_DEPENDS roscpp std_msgs geometry_msgs nav_msgs controller_interface controller_manager_msgs hardware_interface pluginlib tf
-	DEPENDS Boost
+  LIBRARIES
+    interactivity_utils
+  INCLUDE_DIRS
+    ${THIS_PACKAGE_INCLUDE_DIRS}
+  CATKIN_DEPENDS 
+    roscpp std_msgs geometry_msgs nav_msgs controller_interface controller_manager_msgs hardware_interface pluginlib tf
+    moveit_core
+    moveit_visual_tools
+    moveit_ros_planning_interface
+    interactive_markers
+  DEPENDS
+    EIGEN3
+    Boost
+    Dynamixel
 )
 
 ###########
@@ -123,9 +143,13 @@ catkin_package(
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
+set(DYNAMIXEL_INCLUDE_DIRS "/usr/local/include/dynamixel_sdk")
+
 include_directories(
 # include
   ${catkin_INCLUDE_DIRS}
+  ${Boost_INCLUDE_DIR}
+  ${DYNAMIXEL_INCLUDE_DIRS}
   include/snake_robot
 )
 
@@ -137,13 +161,14 @@ include_directories(
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
-# add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
 
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/snake_robot_node.cpp)
 add_executable(snake_robot src/main.cpp src/snakeHW.cpp)
+target_link_libraries(snake_robot ${catkin_LIBRARIES} dxl_x64_cpp rt)
 
 add_executable(circle_TwoJointPublisher src/circle_TwoJointPublisher.cpp)
 target_link_libraries(circle_TwoJointPublisher ${catkin_LIBRARIES})
@@ -153,6 +178,9 @@ target_link_libraries(circle_ThreeJointPublisher ${catkin_LIBRARIES})
 
 add_executable(showpath src/showpath.cpp)
 target_link_libraries(showpath ${catkin_LIBRARIES})
+
+add_executable(IK_client src/IK_client.cpp)
+target_link_libraries(IK_client ${catkin_LIBRARIES})
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
