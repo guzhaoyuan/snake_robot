@@ -1,63 +1,5 @@
 #include <snakeHW.h>
 
-#if defined(__linux__) || defined(__APPLE__)
-#include <fcntl.h>
-#include <termios.h>
-#define STDIN_FILENO 0
-#elif defined(_WIN32) || defined(_WIN64)
-#include <conio.h>
-#endif
-
-#include <stdio.h>
-
-int getch()
-{
-#if defined(__linux__) || defined(__APPLE__)
-  struct termios oldt, newt;
-  int ch;
-  tcgetattr(STDIN_FILENO, &oldt);
-  newt = oldt;
-  newt.c_lflag &= ~(ICANON | ECHO);
-  tcsetattr(STDIN_FILENO, TCSANOW, &newt);
-  ch = getchar();
-  tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
-  return ch;
-#elif defined(_WIN32) || defined(_WIN64)
-  return _getch();
-#endif
-}
-
-int kbhit(void)
-{
-#if defined(__linux__) || defined(__APPLE__)
-  struct termios oldt, newt;
-  int ch;
-  int oldf;
-
-  tcgetattr(STDIN_FILENO, &oldt);
-  newt = oldt;
-  newt.c_lflag &= ~(ICANON | ECHO);
-  tcsetattr(STDIN_FILENO, TCSANOW, &newt);
-  oldf = fcntl(STDIN_FILENO, F_GETFL, 0);
-  fcntl(STDIN_FILENO, F_SETFL, oldf | O_NONBLOCK);
-
-  ch = getchar();
-
-  tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
-  fcntl(STDIN_FILENO, F_SETFL, oldf);
-
-  if (ch != EOF)
-  {
-    ungetc(ch, stdin);
-    return 1;
-  }
-
-  return 0;
-#elif defined(_WIN32) || defined(_WIN64)
-  return _kbhit();
-#endif
-}
-
 Snake::Snake(){ 
  // connect and register the joint state interface
  hardware_interface::JointStateHandle state_handle_a("A", &pos[0], &vel[0], &eff[0]);
@@ -81,9 +23,33 @@ Snake::Snake(){
 }
 
 Snake::~Snake(){
+	int dxl_comm_result = COMM_TX_FAIL;             // Communication result
+	uint8_t dxl_error = 0;
+  // Disable Dynamixel#1 Torque
+  dxl_comm_result = packetHandler->write1ByteTxRx(portHandler, DXL1_ID, ADDR_MX_TORQUE_ENABLE, TORQUE_DISABLE, &dxl_error);
+  if (dxl_comm_result != COMM_SUCCESS)
+  {
+    printf("%s\n", packetHandler->getTxRxResult(dxl_comm_result));
+  }
+  else if (dxl_error != 0)
+  {
+    printf("%s\n", packetHandler->getRxPacketError(dxl_error));
+  }
+
+  // Disable Dynamixel#2 Torque
+  dxl_comm_result = packetHandler->write1ByteTxRx(portHandler, DXL2_ID, ADDR_MX_TORQUE_ENABLE, TORQUE_DISABLE, &dxl_error);
+  if (dxl_comm_result != COMM_SUCCESS)
+  {
+    printf("%s\n", packetHandler->getTxRxResult(dxl_comm_result));
+  }
+  else if (dxl_error != 0)
+  {
+    printf("%s\n", packetHandler->getRxPacketError(dxl_error));
+  }
+
 	// Close port
   portHandler->closePort();
-  std::cout<< "Leaving port closed\n";
+  std::cout<< "Leaving torque disabled and port closed\n";
 }
 
 bool Snake::read() const{
@@ -121,14 +87,45 @@ bool Snake::read() const{
   return true;
 }
 
-void Snake::write(){
-  
+void Snake::write(bool index){
+	int dxl_comm_result = COMM_TX_FAIL;             // Communication result
+	uint8_t dxl_error = 0;                          // Dynamixel error
+	uint8_t param_goal_position[2];
+	bool dxl_addparam_result = false;               // addParam result
+	dynamixel::GroupSyncWrite groupSyncWrite(portHandler, packetHandler, ADDR_MX_GOAL_POSITION, LEN_MX_GOAL_POSITION);
+
+  // Allocate goal position value into byte array
+  param_goal_position[0] = DXL_LOBYTE(index?DXL_MINIMUM_POSITION_VALUE:DXL_MAXIMUM_POSITION_VALUE);
+  param_goal_position[1] = DXL_HIBYTE(index?DXL_MINIMUM_POSITION_VALUE:DXL_MAXIMUM_POSITION_VALUE);
+
+  // Add Dynamixel#1 goal position value to the Syncwrite storage
+  dxl_addparam_result = groupSyncWrite.addParam(DXL1_ID, param_goal_position);
+  if (dxl_addparam_result != true)
+  {
+    fprintf(stderr, "[ID:%03d] groupSyncWrite addparam failed", DXL1_ID);
+    return;
+  }
+
+  // Add Dynamixel#2 goal position value to the Syncwrite parameter storage
+  dxl_addparam_result = groupSyncWrite.addParam(DXL2_ID, param_goal_position);
+  if (dxl_addparam_result != true)
+  {
+    fprintf(stderr, "[ID:%03d] groupSyncWrite addparam failed", DXL2_ID);
+    return;
+  }
+
+  // Syncwrite goal position
+  dxl_comm_result = groupSyncWrite.txPacket();
+  if (dxl_comm_result != COMM_SUCCESS) printf("%s\n", packetHandler->getTxRxResult(dxl_comm_result));
+
+  // Clear syncwrite parameter storage
+  groupSyncWrite.clearParam();
 }
 
 bool Snake::configure(){
 	portHandler = dynamixel::PortHandler::getPortHandler(DEVICENAME);
 	packetHandler = dynamixel::PacketHandler::getPacketHandler(PROTOCOL_VERSION);
-
+	
 	int dxl_comm_result = COMM_TX_FAIL;             // Communication result
 
   uint8_t dxl_error = 0;                          // Dynamixel error
@@ -142,8 +139,6 @@ bool Snake::configure(){
   else
   {
     printf("Failed to open the port!\n");
-    printf("Press any key to terminate...\n");
-    getch();
     return 0;
   }
 
@@ -155,8 +150,6 @@ bool Snake::configure(){
   else
   {
     printf("Failed to change the baudrate!\n");
-    printf("Press any key to terminate...\n");
-    getch();
     return 0;
   }
 
@@ -176,6 +169,37 @@ bool Snake::configure(){
     {
       printf("[ID:%03d] ping Succeeded. Dynamixel model number : %d\n", i, dxl_model_number);
     }
+  }
+
+
+  // Enable Dynamixel#1 Torque
+  dxl_comm_result = packetHandler->write1ByteTxRx(portHandler, DXL1_ID, ADDR_MX_TORQUE_ENABLE, TORQUE_ENABLE, &dxl_error);
+  if (dxl_comm_result != COMM_SUCCESS)
+  {
+    printf("%s\n", packetHandler->getTxRxResult(dxl_comm_result));
+  }
+  else if (dxl_error != 0)
+  {
+    printf("%s\n", packetHandler->getRxPacketError(dxl_error));
+  }
+  else
+  {
+    printf("Dynamixel#%d has been successfully connected \n", DXL1_ID);
+  }
+
+  // Enable Dynamixel#2 Torque
+  dxl_comm_result = packetHandler->write1ByteTxRx(portHandler, DXL2_ID, ADDR_MX_TORQUE_ENABLE, TORQUE_ENABLE, &dxl_error);
+  if (dxl_comm_result != COMM_SUCCESS)
+  {
+    printf("%s\n", packetHandler->getTxRxResult(dxl_comm_result));
+  }
+  else if (dxl_error != 0)
+  {
+    printf("%s\n", packetHandler->getRxPacketError(dxl_error));
+  }
+  else
+  {
+    printf("Dynamixel#%d has been successfully connected \n", DXL2_ID);
   }
 
   return true;
