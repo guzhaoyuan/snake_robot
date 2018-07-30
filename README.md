@@ -32,11 +32,11 @@ Warning: before making any move, make sure the sorvo is not gonna interfere with
 
 ## Design
 
-![single DoF](meta/gif/single.gif =400x)
+<img src="meta/gif/single.gif" width="400">
 
-![double DoF](meta/gif/double.gif =400x)
+<img src="meta/gif/double.gif" width="400">
 
-![snake](meta/gif/snake.gif =400x)
+<img src="meta/gif/snake.gif" width="400">
 
 ## Demo
 
@@ -50,7 +50,13 @@ Warning: before making any move, make sure the sorvo is not gonna interfere with
 
 		roslaunch snake_robot display_twoJointsSnake.launch 
 
-![demo2](meta/pic/demo2.png =400x)
+<img src="meta/pic/demo2.png" width="400">
+
+- [x] simulate snake using ros control
+
+		roslaunch snake_robot snake_world.launch # launch gazebo and load urdf snake
+		roslaunch snake_robot snake_robot_control.launch # pop up controllers for each joint
+		rostopic pub /snake/joint1_position_controller/command std_msgs/Float64 "data: 1.0" # send command to controller
 
 - [ ] Draw a circle using 7 joint.
 - [ ] Gravity Compensation, using known snake model and current pose state to apply force on each joint, thus to compensate the gravity efforts.
