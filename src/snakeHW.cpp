@@ -131,7 +131,7 @@ bool Snake::configure(){
   uint8_t dxl_error = 0;                          // Dynamixel error
   uint16_t dxl_model_number;                      // Dynamixel model number
 
-// Open port
+	// Open port
   if (portHandler->openPort())
   {
     printf("Succeeded to open the port!\n");

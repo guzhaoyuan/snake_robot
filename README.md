@@ -8,35 +8,35 @@ Ubuntu 16.04 LTS, ROS kinetic, ROS Control.
 
 ## Install Dynamixel
 
-		# install ros kinetic
+	# install ros kinetic
 
-		# after insert usb2dynamixel
-		sudo chmod 777 /dev/ttyUSB0
-		
-		# install dynamixel lib
-		mkdir workspace && cd workspace
-		git clone https://github.com/ROBOTIS-GIT/DynamixelSDK.git
-		cd DynamixelSDK/build/linux64
-		make
-		sudo make install
-		export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib # add dynamixel lib install path
-		
-		# get code
-		cd ~/workspace/src
-		git clone https://github.com/guzhaoyuan/snake_robot.git
-		cd ..
-		catkin_make
+	# after insert usb2dynamixel
+	sudo chmod 777 /dev/ttyUSB0
+	
+	# install dynamixel lib
+	mkdir workspace && cd workspace
+	git clone https://github.com/ROBOTIS-GIT/DynamixelSDK.git
+	cd DynamixelSDK/build/linux64
+	make
+	sudo make install
+	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib # add dynamixel lib install path
+	
+	# get code
+	cd ~/workspace/src
+	git clone https://github.com/guzhaoyuan/snake_robot.git
+	cd ..
+	catkin_make
 	
 
 Warning: before making any move, make sure the sorvo is not gonna interfere with anything to prevent damage or harm!!
 
 ## Design
 
-![single DoF](meta/gif/single.gif)
+![single DoF](meta/gif/single.gif =400x)
 
-![double DoF](meta/gif/double.gif)
+![double DoF](meta/gif/double.gif =400x)
 
-![snake](meta/gif/snake.gif)
+![snake](meta/gif/snake.gif =400x)
 
 ## Demo
 
@@ -50,7 +50,7 @@ Warning: before making any move, make sure the sorvo is not gonna interfere with
 
 		roslaunch snake_robot display_twoJointsSnake.launch 
 
-![demo2](meta/pic/demo2.png)
+![demo2](meta/pic/demo2.png =400x)
 
 - [ ] Draw a circle using 7 joint.
 - [ ] Gravity Compensation, using known snake model and current pose state to apply force on each joint, thus to compensate the gravity efforts.
