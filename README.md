@@ -69,11 +69,12 @@ Warning: before making any move, make sure the sorvo is not gonna interfere with
 
 ## TODO
 
-- [ ] put the snake in gazebo to see how it does in real world
+- [ ] soft limit and transmission jnt motor space convert
+- [x] put the snake in gazebo to see how it does in real world
 - [ ] IK for 2-DoF snake
-- [ ] implement position and velocity interface
+- [x] implement position interface
 - [ ] drive one motor
-- [ ] resource management
+- [x] resource management
 
 ## Resources
 
@@ -82,3 +83,4 @@ Warning: before making any move, make sure the sorvo is not gonna interfere with
 - [git manual](https://github.com/ROBOTIS-GIT/emanual/blob/master/docs/en/dxl/mx/mx-28-2.md)
 - [drawing](https://github.com/ROBOTIS-GIT/emanual/blob/master/docs/en/dxl/mx/mx-28-2.md#drawings)
 - [ros dynamixel tutorial](http://wiki.ros.org/dynamixel_controllers/Tutorials/Creating%20a%20joint%20torque%20controller)
+- [robotHW that I consult from](https://github.com/xmproject/xm_robothw)
