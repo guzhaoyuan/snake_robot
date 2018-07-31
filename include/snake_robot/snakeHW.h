@@ -8,7 +8,12 @@
 
 #include <controller_manager/controller_manager.h>
 
+#include <transmission_interface/transmission_interface.h>
+#include <transmission_interface/simple_transmission.h>
+
 #include "dynamixel_sdk.h"
+
+#define pi                              3.1415926
 
 // Protocol version
 #define DXL1_ID                         1                   // Dynamixel#1 ID: 1
@@ -32,6 +37,7 @@
 #define DXL_MIDDLE_POSITION_VALUE       2047.0              // 0
 #define DXL_MAXIMUM_POSITION_VALUE      2559.0              // 45
 #define DXL_MOVING_STATUS_THRESHOLD     10                  // Dynamixel moving status threshold
+#define DXL_REDUCE_RATE                 651.898658          //4096/3.1415926/2
 
 class SnakeHW : public hardware_interface::RobotHW
 {
@@ -56,7 +62,35 @@ private:
   hardware_interface::JointStateInterface jnt_state_interface;
   hardware_interface::PositionJointInterface jnt_pos_interface;
   
+  //Transmission interfaces
+  transmission_interface::ActuatorToJointStateInterface act_to_jnt_state;
+  transmission_interface::JointToActuatorPositionInterface jnt_to_act_pos;
+
+  //Transmissions for the end two roll and pitch joints
+  transmission_interface::SimpleTransmission sim_trans_joint1;
+  transmission_interface::SimpleTransmission sim_trans_joint2;
+
+  //Actuator and joint space variables
+  transmission_interface::ActuatorData a_state_data[2]; // <- read from servo
+  transmission_interface::JointData    j_state_data[2]; // transfer from a_state_data and input to controller
+  transmission_interface::JointData    j_cmd_data[2];   // output from controller transfer to a_cmd_data
+  transmission_interface::ActuatorData a_cmd_data[2];   // -> write to servo
+
+  void TransJointToActuator();
+  void TransActuatorToJoint();
+
   double freq;
+
+  double a_curr_pos[2]; // Size 3: One per actuator
+  double a_curr_vel[2];
+  double a_curr_eff[2];
+  double a_cmd_pos[2];
+
+  double j_curr_pos[2]; // Size 3: One per joint
+  double j_curr_vel[2];
+  double j_curr_eff[2];
+  double j_cmd_pos[2];
+
 
   double cmd[2];
   double pos[2];

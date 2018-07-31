@@ -1,3 +1,4 @@
 <launch>
 	<node name="main" pkg="snake_robot" type="main" output="screen" ns="/snake"/>
+	<include file="$(find snake_robot)/snake_gazebo/launch/snake_robot_control.launch" />
 </launch>

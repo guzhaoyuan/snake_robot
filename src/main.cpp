@@ -24,6 +24,7 @@ int main(int argc, char **argv)
 	// hw_spinner.start();
 	cm_spinner.start();
 
+	ros::Duration(2).sleep();
 
 	bool index = 0;
 	int i = 0;
@@ -37,7 +38,7 @@ int main(int argc, char **argv)
 
 		index = !index;
 		std::cout << "round " << ++i << ", index " << index << std::endl;
-		
+
 		rate.sleep();
 	}
 	cm_spinner.stop();

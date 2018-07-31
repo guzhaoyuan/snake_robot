@@ -67,6 +67,7 @@
   <depend>controller_manager_msgs</depend>
   <depend>controller_manager</depend>
   <depend>hardware_interface</depend>
+  <depend>transmission_interface</depend>
   <depend>pluginlib</depend>
   
   <exec_depend>moveit_core</exec_depend>

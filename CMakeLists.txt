@@ -21,8 +21,9 @@ find_package(catkin REQUIRED COMPONENTS
   moveit_ros_planning_interface
   pluginlib
   geometric_shapes
-  controller_manager
   hardware_interface
+  controller_manager
+  transmission_interface
 )
 
 
@@ -132,7 +133,8 @@ catkin_package(
     nav_msgs 
     controller_interface 
     controller_manager_msgs 
-    controller_manager 
+    controller_manager
+    transmission_interface
     hardware_interface 
     pluginlib 
     tf

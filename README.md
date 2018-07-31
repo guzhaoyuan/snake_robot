@@ -32,11 +32,11 @@ Warning: before making any move, make sure the sorvo is not gonna interfere with
 
 ## Design
 
-<img src="meta/gif/single.gif" width="400">
+<center><img src="meta/gif/single.gif" width="400"></center>
 
-<img src="meta/gif/double.gif" width="400">
+<center><img src="meta/gif/double.gif" width="400"></center>
 
-<img src="meta/gif/snake.gif" width="400">
+<center><img src="meta/gif/snake.gif" width="400"></center>
 
 ## Demo
 
@@ -50,7 +50,7 @@ Warning: before making any move, make sure the sorvo is not gonna interfere with
 
 		roslaunch snake_robot display_twoJointsSnake.launch 
 
-<img src="meta/pic/demo2.png" width="400">
+<center><img src="meta/pic/demo2.png" width="400"></center>
 
 - [x] simulate snake using ros control
 
@@ -60,16 +60,15 @@ Warning: before making any move, make sure the sorvo is not gonna interfere with
 
 - [ ] control real snake using ros control
 
-		roslaunch snake_robot main.launch # launch main including controller_manager and keep updating state
-		roslaunch snake_robot snake_robot_control.launch # pop up controllers for each joint
-		rostopic pub /snake/joint1_position_controller/command std_msgs/Float64 "data: 1.0" # send command to controller
+		roslaunch snake_robot main.launch # launch main including controller_manager and pop up controllers for each joint and keep updating state
+		rostopic pub /snake/joint1_position_controller/command std_msgs/Float64 "data: 0.1" # send command to controller
 
 - [ ] Draw a circle using 7 joint.
 - [ ] Gravity Compensation, using known snake model and current pose state to apply force on each joint, thus to compensate the gravity efforts.
 
 ## TODO
 
-- [ ] soft limit and transmission jnt motor space convert
+- [x] soft limit and transmission jnt motor space convert
 - [x] put the snake in gazebo to see how it does in real world
 - [ ] IK for 2-DoF snake
 - [x] implement position interface

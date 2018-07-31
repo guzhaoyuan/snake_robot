@@ -1,27 +1,75 @@
 #include <snakeHW.h>
 #include <algorithm>
 
-SnakeHW::SnakeHW(ros::NodeHandle nh_):nh(nh_){ 
+SnakeHW::SnakeHW(ros::NodeHandle nh_)
+        :nh(nh_)
+        ,sim_trans_joint1(DXL_REDUCE_RATE, -pi)
+        ,sim_trans_joint2(DXL_REDUCE_RATE, -pi)
+{ 
   // connect and register the joint state interface
   // claim joint1 as a joint resource which relate with pos[0]
   // and controller will control joint1 according to snake_controllers.yaml
-  hardware_interface::JointStateHandle state_handle1("joint1", &pos[0], &vel[0], &eff[0]);
+  hardware_interface::JointStateHandle state_handle1("joint1", &j_curr_pos[0], &j_curr_vel[0], &j_curr_eff[0]);
   jnt_state_interface.registerHandle(state_handle1);
 
-  hardware_interface::JointStateHandle state_handle2("joint2", &pos[1], &vel[1], &eff[1]);
+  hardware_interface::JointStateHandle state_handle2("joint2", &j_curr_pos[1], &j_curr_vel[1], &j_curr_eff[1]);
   jnt_state_interface.registerHandle(state_handle2);
 
   registerInterface(&jnt_state_interface);
 
   // connect and register the joint position interface
-  hardware_interface::JointHandle pos_handle1(jnt_state_interface.getHandle("joint1"), &cmd[0]);
+  hardware_interface::JointHandle pos_handle1(jnt_state_interface.getHandle("joint1"), &j_cmd_pos[0]);
   jnt_pos_interface.registerHandle(pos_handle1);
 
-  hardware_interface::JointHandle pos_handle2(jnt_state_interface.getHandle("joint2"), &cmd[1]);
+  hardware_interface::JointHandle pos_handle2(jnt_state_interface.getHandle("joint2"), &j_cmd_pos[1]);
   jnt_pos_interface.registerHandle(pos_handle2);
 
   registerInterface(&jnt_pos_interface);
 
+
+  // register transmission
+  a_state_data[0].position.push_back(&a_curr_pos[0]);
+  a_state_data[0].velocity.push_back(&a_curr_vel[0]);
+  a_state_data[0].effort.push_back(&a_curr_eff[0]);
+
+  j_state_data[0].position.push_back(&j_curr_pos[0]);
+  j_state_data[0].velocity.push_back(&j_curr_vel[0]);
+  j_state_data[0].effort.push_back(&j_curr_eff[0]);
+
+  a_cmd_data[0].position.push_back(&a_cmd_pos[0]);
+  j_cmd_data[0].position.push_back(&j_cmd_pos[0]);
+
+  a_state_data[1].position.push_back(&a_curr_pos[1]);
+  a_state_data[1].velocity.push_back(&a_curr_vel[1]);
+  a_state_data[1].effort.push_back(&a_curr_eff[1]);
+
+  j_state_data[1].position.push_back(&j_curr_pos[1]);
+  j_state_data[1].velocity.push_back(&j_curr_vel[1]);
+  j_state_data[1].effort.push_back(&j_curr_eff[1]);
+
+  a_cmd_data[1].position.push_back(&a_cmd_pos[1]);
+  j_cmd_data[1].position.push_back(&j_cmd_pos[1]);
+
+  act_to_jnt_state.registerHandle(transmission_interface::ActuatorToJointStateHandle("trans1",
+                                                             &sim_trans_joint1,
+                                                             a_state_data[0],
+                                                             j_state_data[0]));
+
+  act_to_jnt_state.registerHandle(transmission_interface::ActuatorToJointStateHandle("trans2",
+                                                             &sim_trans_joint2,
+                                                             a_state_data[1],
+                                                             j_state_data[1]));
+
+  jnt_to_act_pos.registerHandle(transmission_interface::JointToActuatorPositionHandle("trans1",
+                                                              &sim_trans_joint1,
+                                                              a_cmd_data[0],
+                                                              j_cmd_data[0]));
+
+  jnt_to_act_pos.registerHandle(transmission_interface::JointToActuatorPositionHandle("trans2",
+                                                              &sim_trans_joint2,
+                                                              a_cmd_data[1],
+                                                              j_cmd_data[1]));
+// config dynamixel
   configure();
 }
 
@@ -57,7 +105,10 @@ SnakeHW::~SnakeHW(){
 
 void SnakeHW::read(const ros::Time& time, const ros::Duration& period){
   
-  ROS_INFO("pos:%f, %f", pos[0], pos[1]);
+  ROS_INFO("pos:%f, %f", a_curr_pos[0], a_curr_pos[1]);
+  //read to a_state_data
+  act_to_jnt_state.propagate();
+
 }
 // void SnakeHW::read(const ros::Time& time, const ros::Duration& period){
 // 	int dxl_comm_result = COMM_TX_FAIL;             // Communication result
@@ -90,17 +141,20 @@ void SnakeHW::read(const ros::Time& time, const ros::Duration& period){
 // }
 
 void SnakeHW::write(const ros::Time& time, const ros::Duration& period, bool index){
-  if(cmd[0]<DXL_MINIMUM_POSITION_VALUE || cmd[0]>DXL_MAXIMUM_POSITION_VALUE){
-    ROS_WARN("cmd exceed limit.");
-    cmd[0] = std::max(DXL_MINIMUM_POSITION_VALUE, std::min(DXL_MAXIMUM_POSITION_VALUE, cmd[0]));
+  jnt_to_act_pos.propagate();
+// use a_cmd_pos
+
+  if(a_cmd_pos[0]<DXL_MINIMUM_POSITION_VALUE || a_cmd_pos[0]>DXL_MAXIMUM_POSITION_VALUE){
+    ROS_WARN("cmd1:%f exceed limit.", a_cmd_pos[0]);
+    a_cmd_pos[0] = std::max(DXL_MINIMUM_POSITION_VALUE, std::min(DXL_MAXIMUM_POSITION_VALUE, a_cmd_pos[0]));
   }
-  if(cmd[1]<DXL_MINIMUM_POSITION_VALUE || cmd[1]>DXL_MAXIMUM_POSITION_VALUE){
-    ROS_WARN("cmd exceed limit.");
-    cmd[1] = std::max(DXL_MINIMUM_POSITION_VALUE, std::min(DXL_MAXIMUM_POSITION_VALUE, cmd[1]));
+  if(a_cmd_pos[1]<DXL_MINIMUM_POSITION_VALUE || a_cmd_pos[1]>DXL_MAXIMUM_POSITION_VALUE){
+    ROS_WARN("cmd2:%f exceed limit.", a_cmd_pos[1]);
+    a_cmd_pos[1] = std::max(DXL_MINIMUM_POSITION_VALUE, std::min(DXL_MAXIMUM_POSITION_VALUE, a_cmd_pos[1]));
   }
 
-  pos[0] = cmd[0];
-  pos[1] = cmd[1];
+  a_curr_pos[0] = a_cmd_pos[0];
+  a_curr_pos[1] = a_cmd_pos[1];
 }
 // void SnakeHW::write(const ros::Time& time, const ros::Duration& period, bool index){
 // 	int dxl_comm_result = COMM_TX_FAIL;             // Communication result
@@ -140,8 +194,8 @@ void SnakeHW::write(const ros::Time& time, const ros::Duration& period, bool ind
 bool SnakeHW::configure(){
 
   freq = 10.0;
-  pos[0] = pos[1] = DXL_MIDDLE_POSITION_VALUE;
-  cmd[0] = cmd[1] = DXL_MIDDLE_POSITION_VALUE;
+  a_curr_pos[0] = a_curr_pos[1] = DXL_MIDDLE_POSITION_VALUE;
+  a_cmd_pos[0] = a_cmd_pos[1] = DXL_MIDDLE_POSITION_VALUE;
 
 	portHandler = dynamixel::PortHandler::getPortHandler(DEVICENAME);
 	packetHandler = dynamixel::PacketHandler::getPacketHandler(PROTOCOL_VERSION);
