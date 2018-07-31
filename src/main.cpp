@@ -24,20 +24,19 @@ int main(int argc, char **argv)
 	// hw_spinner.start();
 	cm_spinner.start();
 
-	ros::Duration(2).sleep();
+	ros::Duration(3).sleep();
 
-	bool index = 0;
+
 	int i = 0;
 	while (ros::ok())
 	{
 		ros::Time currentTime = ros::Time::now();
 
+		std::cout << "round " << ++i << "\n";
+
 		snakeHW.read(currentTime, ros::Duration(1 / snakeHW.getFreq()));
 		cm.update(currentTime, ros::Duration(1 / snakeHW.getFreq()));
-		snakeHW.write(currentTime, ros::Duration(1 / snakeHW.getFreq()), index);
-
-		index = !index;
-		std::cout << "round " << ++i << ", index " << index << std::endl;
+		snakeHW.write(currentTime, ros::Duration(1 / snakeHW.getFreq()));
 
 		rate.sleep();
 	}

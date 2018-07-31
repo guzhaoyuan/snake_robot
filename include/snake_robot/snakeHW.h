@@ -47,7 +47,7 @@ public:
   bool configure();
   bool start();
   void read(const ros::Time& time, const ros::Duration& period);
-  void write(const ros::Time& time, const ros::Duration& period, bool index);
+  void write(const ros::Time& time, const ros::Duration& period);
   void stop();
   void cleanup();
   double getFreq();
@@ -76,8 +76,7 @@ private:
   transmission_interface::JointData    j_cmd_data[2];   // output from controller transfer to a_cmd_data
   transmission_interface::ActuatorData a_cmd_data[2];   // -> write to servo
 
-  void TransJointToActuator();
-  void TransActuatorToJoint();
+  void writeHome();
 
   double freq;
 
@@ -90,12 +89,6 @@ private:
   double j_curr_vel[2];
   double j_curr_eff[2];
   double j_cmd_pos[2];
-
-
-  double cmd[2];
-  double pos[2];
-  double vel[2];
-  double eff[2];
 };
 
 #endif
