@@ -21,6 +21,8 @@ find_package(catkin REQUIRED COMPONENTS
   moveit_ros_planning_interface
   pluginlib
   geometric_shapes
+  controller_manager
+  hardware_interface
 )
 
 
@@ -126,7 +128,14 @@ catkin_package(
   INCLUDE_DIRS
     ${THIS_PACKAGE_INCLUDE_DIRS}
   CATKIN_DEPENDS 
-    roscpp std_msgs geometry_msgs nav_msgs controller_interface controller_manager_msgs hardware_interface pluginlib tf
+    roscpp std_msgs geometry_msgs 
+    nav_msgs 
+    controller_interface 
+    controller_manager_msgs 
+    controller_manager 
+    hardware_interface 
+    pluginlib 
+    tf
     moveit_core
     moveit_visual_tools
     moveit_ros_planning_interface
@@ -147,6 +156,7 @@ set(DYNAMIXEL_INCLUDE_DIRS "/usr/local/include/dynamixel_sdk")
 
 include_directories(
 # include
+  ${THIS_PACKAGE_INCLUDE_DIRS}
   ${catkin_INCLUDE_DIRS}
   ${Boost_INCLUDE_DIR}
   ${DYNAMIXEL_INCLUDE_DIRS}

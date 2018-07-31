@@ -65,6 +65,7 @@
 
   <depend>controller_interface</depend>
   <depend>controller_manager_msgs</depend>
+  <depend>controller_manager</depend>
   <depend>hardware_interface</depend>
   <depend>pluginlib</depend>
   

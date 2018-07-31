@@ -6,6 +6,8 @@
 #include <hardware_interface/joint_state_interface.h>
 #include <hardware_interface/robot_hw.h>
 
+#include <controller_manager/controller_manager.h>
+
 #include "dynamixel_sdk.h"
 
 // Protocol version
@@ -26,24 +28,27 @@
 
 #define TORQUE_ENABLE                   1                   // Value for enabling the torque
 #define TORQUE_DISABLE                  0                   // Value for disabling the torque
-#define DXL_MINIMUM_POSITION_VALUE      1948                 // Dynamixel will rotate between this value
-#define DXL_MIDDLE_POSITION_VALUE       2048
-#define DXL_MAXIMUM_POSITION_VALUE      2148                 // and this value (note that the Dynamixel would not move when the position value is out of movable range. Check e-manual about the range of the Dynamixel you use.)
+#define DXL_MINIMUM_POSITION_VALUE      1535.0              // -45
+#define DXL_MIDDLE_POSITION_VALUE       2047.0              // 0
+#define DXL_MAXIMUM_POSITION_VALUE      2559.0              // 45
 #define DXL_MOVING_STATUS_THRESHOLD     10                  // Dynamixel moving status threshold
 
-class Snake : public hardware_interface::RobotHW
+class SnakeHW : public hardware_interface::RobotHW
 {
 public:
-  Snake();
-  ~Snake();
+  SnakeHW(ros::NodeHandle nh_);
+  ~SnakeHW();
   bool configure();
   bool start();
-  bool read() const; 
-  void write(bool index);
+  void read(const ros::Time& time, const ros::Duration& period);
+  void write(const ros::Time& time, const ros::Duration& period, bool index);
   void stop();
   void cleanup();
+  double getFreq();
 
 private:
+  ros::NodeHandle nh;
+
   dynamixel::PortHandler *portHandler;
   dynamixel::PacketHandler *packetHandler;
   // dynamixel::GroupSyncWrite groupSyncWrite;
@@ -51,6 +56,8 @@ private:
   hardware_interface::JointStateInterface jnt_state_interface;
   hardware_interface::PositionJointInterface jnt_pos_interface;
   
+  double freq;
+
   double cmd[2];
   double pos[2];
   double vel[2];

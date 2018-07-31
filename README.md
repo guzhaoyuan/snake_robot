@@ -58,6 +58,12 @@ Warning: before making any move, make sure the sorvo is not gonna interfere with
 		roslaunch snake_robot snake_robot_control.launch # pop up controllers for each joint
 		rostopic pub /snake/joint1_position_controller/command std_msgs/Float64 "data: 1.0" # send command to controller
 
+- [ ] control real snake using ros control
+
+		roslaunch snake_robot main.launch # launch main including controller_manager and keep updating state
+		roslaunch snake_robot snake_robot_control.launch # pop up controllers for each joint
+		rostopic pub /snake/joint1_position_controller/command std_msgs/Float64 "data: 1.0" # send command to controller
+
 - [ ] Draw a circle using 7 joint.
 - [ ] Gravity Compensation, using known snake model and current pose state to apply force on each joint, thus to compensate the gravity efforts.
 

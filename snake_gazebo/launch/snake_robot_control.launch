@@ -1,12 +1,15 @@
 <launch>
 
-<rosparam file="$(find snake_robot)/config/snake_control.yaml" command="load"/>
+<!-- load controller parameters into parameter server -->
+<rosparam file="$(find snake_robot)/config/snake_controllers.yaml" command="load"/>
 
+<!-- load controller using controller_manager service -->
 <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="/snake" 
 	args="joint_state_controller joint1_position_controller joint2_position_controller"/>
 
-<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
+<!-- convert joint states to TF transforms for rviz, etc -->
+<!-- <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
 	<remap from="joint_states" to="/snake/joint_states"/>
-</node>
+</node> -->
 
 </launch>
