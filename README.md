@@ -68,17 +68,22 @@ Warning: before making any move, make sure the sorvo is not gonna interfere with
 		roslaunch snake_robot main.launch # launch main including controller_manager and pop up controllers for each joint and keep updating state
 		roslaunch snake_robot display_twoJointsSnake.launch # publish to joint's command topic to control real robot
 
-- [ ] Draw a circle using 7 joint.
+- [x] IK for a 3-DoF snake
+
+		roslaunch roslaunch snake_moveit_config demo.launch
+		rosrun snake_robot IK_client 
+
 - [ ] Gravity Compensation, using known snake model and current pose state to apply force on each joint, thus to compensate the gravity efforts.
 
 ## TODO
 
 - [x] soft limit and transmission jnt motor space convert
 - [x] put the snake in gazebo to see how it does in real world
-- [ ] IK for 2-DoF snake
+- [x] IK for 2-DoF snake
 - [x] implement position interface
 - [x] drive one motor
 - [x] resource management
+- [ ] Draw a circle using 7 joint.
 
 ## Resources
 
