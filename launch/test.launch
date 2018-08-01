@@ -1,5 +1,0 @@
-<launch>
-
-<node name="snake_robot" pkg="snake_robot" output="screen" type="snake_robot"/>
-
-</launch>

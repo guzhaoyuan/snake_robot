@@ -6,27 +6,26 @@ Robotis Dynamixel MX-28AR, Protocol1.0.
 
 Ubuntu 16.04 LTS, ROS kinetic, ROS Control.
 
-## Install Dynamixel
+## Install
 
-	# install ros kinetic
+	# 1. install ros kinetic and create workspace
 
-	# after insert usb2dynamixel
-	sudo chmod 777 /dev/ttyUSB0
-	
-	# install dynamixel lib
-	mkdir workspace && cd workspace
+	# 2. install dynamixel lib
 	git clone https://github.com/ROBOTIS-GIT/DynamixelSDK.git
 	cd DynamixelSDK/build/linux64
 	make
 	sudo make install
 	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib # add dynamixel lib install path
 	
-	# get code
-	cd ~/workspace/src
+	# 3. get code
+	cd ~/catkin_ws/src
 	git clone https://github.com/guzhaoyuan/snake_robot.git
 	cd ..
 	catkin_make
 	
+Note: dynamixel communicate using RS485, the official hardware for communicating with dynamixel is USB2Dynamixel. After insert USB2Dynamixel:
+
+	sudo chmod 777 /dev/ttyUSB0
 
 Warning: before making any move, make sure the sorvo is not gonna interfere with anything to prevent damage or harm!!
 
@@ -52,6 +51,10 @@ Warning: before making any move, make sure the sorvo is not gonna interfere with
 
 <center><img src="meta/pic/demo2.png" width="400"></center>
 
+- [x] Draw a circle using 7 joints.
+
+		roslaunch snake_robot display_sevenJointSnake.launch 
+
 - [x] simulate snake using ros control
 
 		roslaunch snake_robot snake_world.launch # launch gazebo and load urdf snake
@@ -73,8 +76,6 @@ Warning: before making any move, make sure the sorvo is not gonna interfere with
 		roslaunch roslaunch snake_moveit_config demo.launch
 		rosrun snake_robot IK_client 
 
-- [ ] Gravity Compensation, using known snake model and current pose state to apply force on each joint, thus to compensate the gravity efforts.
-
 ## TODO
 
 - [x] soft limit and transmission jnt motor space convert
@@ -83,6 +84,7 @@ Warning: before making any move, make sure the sorvo is not gonna interfere with
 - [x] implement position interface
 - [x] drive one motor
 - [x] resource management
+- [ ] IK for 7-DoF snake
 - [ ] Draw a circle using 7 joint.
 
 ## Resources

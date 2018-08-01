@@ -188,6 +188,9 @@ target_link_libraries(circle_TwoJointPublisher ${catkin_LIBRARIES})
 add_executable(circle_ThreeJointPublisher src/circle_ThreeJointPublisher.cpp)
 target_link_libraries(circle_ThreeJointPublisher ${catkin_LIBRARIES})
 
+add_executable(circle_SevenJointPublisher src/circle_SevenJointPublisher.cpp)
+target_link_libraries(circle_SevenJointPublisher ${catkin_LIBRARIES})
+
 add_executable(showpath src/showpath.cpp)
 target_link_libraries(showpath ${catkin_LIBRARIES})
 
