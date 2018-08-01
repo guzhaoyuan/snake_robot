@@ -197,6 +197,9 @@ target_link_libraries(showpath ${catkin_LIBRARIES})
 add_executable(IK_client src/IK_client.cpp)
 target_link_libraries(IK_client ${catkin_LIBRARIES})
 
+add_executable(IK_circle_client src/IK_circle_client.cpp)
+target_link_libraries(IK_circle_client ${catkin_LIBRARIES})
+
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use

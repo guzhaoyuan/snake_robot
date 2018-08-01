@@ -73,7 +73,7 @@ Warning: before making any move, make sure the sorvo is not gonna interfere with
 
 - [x] IK for a 3-DoF snake
 
-		roslaunch roslaunch snake_moveit_config demo.launch
+		roslaunch snake_robot demo_IK.launch
 		rosrun snake_robot IK_client 
 
 ## TODO
@@ -84,8 +84,8 @@ Warning: before making any move, make sure the sorvo is not gonna interfere with
 - [x] implement position interface
 - [x] drive one motor
 - [x] resource management
-- [ ] IK for 7-DoF snake
-- [ ] Draw a circle using 7 joint.
+- [x] IK for 7-DoF snake
+- [x] Draw a circle using 7 joint.
 
 ## Resources
 

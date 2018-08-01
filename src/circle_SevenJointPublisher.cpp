@@ -1,5 +1,5 @@
-// created by zion on 2018/7/12
-// it goes a ellipse for now
+// created by zion on 2018/8/31
+// it goes a ellipse
 #include "ros/ros.h"
 #include "std_msgs/Header.h"
 #include "sensor_msgs/JointState.h"
