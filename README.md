@@ -20,6 +20,7 @@ Ubuntu 16.04 LTS, ROS kinetic, ROS Control.
 	# 3. get code
 	cd ~/catkin_ws/src
 	git clone https://github.com/guzhaoyuan/snake_robot.git
+	git clone https://github.com/guzhaoyuan/snake_moveit_config.git
 	cd ..
 	catkin_make
 	
@@ -73,8 +74,13 @@ Warning: before making any move, make sure the sorvo is not gonna interfere with
 
 - [x] IK for a 3-DoF snake
 
-		roslaunch snake_robot demo_IK.launch
+		roslaunch three_joint_snake_moveit_config demo.launch
 		rosrun snake_robot IK_client 
+
+- [x] IK for a 7-DoF snake to draw circle
+
+		roslaunch seven_joint_snake_moveit_config demo.launch
+		rosrun snake_robot IK_circle_client 
 
 ## TODO
 
