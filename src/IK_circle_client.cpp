@@ -16,12 +16,12 @@
 #include "sensor_msgs/JointState.h"
 
 #define pi 3.1415926
+#define precision 100
+#define updateRate 10
 
 int main(int argc, char** argv)
 {
   ros::init(argc, argv, "ik_client");
-  // ros::AsyncSpinner spinner(1);
-  // spinner.start();
 
   ros::NodeHandle node_handle;
   ros::ServiceClient FK_client = node_handle.serviceClient<moveit_msgs::GetPositionFK>("compute_fk");
@@ -29,6 +29,8 @@ int main(int argc, char** argv)
 
   ros::NodeHandle n;
   ros::Publisher pub = n.advertise<sensor_msgs::JointState>("joint_states", 1000);
+
+  ros::Rate loop_rate(updateRate);
 
   while (!IK_client.exists())
   {
@@ -110,7 +112,7 @@ int main(int argc, char** argv)
   
   while(ros::ok()){
     count++;
-    theta += pi*2/200;
+    theta += pi*2/precision;
 
     // current joint state
     IK_srv.request.ik_request.robot_state.joint_state.header.stamp = ros::Time::now();
@@ -146,10 +148,10 @@ int main(int argc, char** argv)
     pub.publish(circlePoint);
     ros::spinOnce();//check for incoming messages, wait for callback
 
-    if(!count%200){
+    if(!count%precision){
       theta = 0;
     }
 
-    ros::Duration(0.1).sleep();
+    loop_rate.sleep();
   }   
 }

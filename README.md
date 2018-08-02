@@ -80,7 +80,7 @@ Warning: before making any move, make sure the sorvo is not gonna interfere with
 - [x] IK for a 7-DoF snake to draw circle
 
 		roslaunch seven_joint_snake_moveit_config demo.launch
-		rosrun snake_robot IK_circle_client 
+		rosrun snake_robot showpath link8 # you can show path of any link in the robot 
 
 ## TODO
 
