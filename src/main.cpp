@@ -1,3 +1,6 @@
+// created by zion on 2018/7/30
+// start controller_manager
+// start read() and write() to real robot in a specific rate
 #include <snakeHW.h>
 #include <ros/ros.h>
 #include <ros/callback_queue.h>

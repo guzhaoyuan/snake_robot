@@ -1,5 +1,5 @@
 // created by zion on 2018/7/12
-// it goes a ellipse for now
+// it write to 2 joint snake and make snake end goes a ellipse
 #include "ros/ros.h"
 #include "std_msgs/Header.h"
 #include "std_msgs/Float64.h"

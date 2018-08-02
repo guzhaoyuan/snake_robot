@@ -1,3 +1,6 @@
+// created by zion on 2018/7/31
+// a test to use service from moveit's move_group to compute FK and IK
+
 #include <ros/ros.h>
 
 // MoveIt!

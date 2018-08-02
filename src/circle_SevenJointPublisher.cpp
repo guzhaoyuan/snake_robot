@@ -1,5 +1,5 @@
-// created by zion on 2018/8/31
-// it goes a ellipse
+// created by zion on 2018/8/1
+// it write to 7 joint snake and make snake end goes a ellipse
 #include "ros/ros.h"
 #include "std_msgs/Header.h"
 #include "sensor_msgs/JointState.h"

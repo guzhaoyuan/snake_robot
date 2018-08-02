@@ -1,3 +1,7 @@
+// created by zion on 2018/8/1
+// use service from moveit's move_group to compute FK and IK
+// calc each joint using IK service
+// publish to make the end of snake go circle in space
 #include <ros/ros.h>
 
 // MoveIt!

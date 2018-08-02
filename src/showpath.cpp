@@ -1,5 +1,6 @@
 // created by zion on 2018/7/12
-// this is a separate function to showpath, it will listen to tf for a while and start pub to rviz to show path.
+// this is a separate function to showpath
+// it will listen to tf for a while and then start pub to rviz to show path.
 #include <ros/ros.h>
 #include <ros/console.h>
 // msg

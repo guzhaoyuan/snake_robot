@@ -38,6 +38,12 @@ Warning: before making any move, make sure the sorvo is not gonna interfere with
 
 <center><img src="meta/gif/snake.gif" width="400"></center>
 
+## Hardware Setup
+
+<center><img src="meta/pic/hardware.jpg" width="400"></center>
+
+<center><img src="meta/pic/hardware_computer.jpg" width="400"></center>
+
 ## Demo
 
 - [x] ping servo.
@@ -67,10 +73,12 @@ Warning: before making any move, make sure the sorvo is not gonna interfere with
 		roslaunch snake_robot main.launch # launch main including controller_manager and pop up controllers for each joint and keep updating state
 		rostopic pub /snake/joint1_position_controller/command std_msgs/Float64 "data: 0.1" # send command to controller
 
-- [x] control real snake to draw circle using ros control
+- [x] control real 2 joint snake to draw ellipse using ros control
 		
 		roslaunch snake_robot main.launch # launch main including controller_manager and pop up controllers for each joint and keep updating state
 		roslaunch snake_robot display_twoJointsSnake.launch # publish to joint's command topic to control real robot
+
+<center><img src="meta/gif/real_snake.gif" width="400"></center>
 
 - [x] IK for a 3-DoF snake
 
@@ -81,6 +89,8 @@ Warning: before making any move, make sure the sorvo is not gonna interfere with
 
 		roslaunch seven_joint_snake_moveit_config demo.launch
 		rosrun snake_robot showpath link8 # you can show path of any link in the robot 
+
+<center><img src="meta/gif/seven_circle.gif" width="400"></center>
 
 ## TODO
 

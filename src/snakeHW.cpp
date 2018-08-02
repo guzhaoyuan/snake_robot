@@ -1,3 +1,6 @@
+// robotHW that communicate with real hardware
+// the file is invoked by main.cpp
+
 #include <snakeHW.h>
 #include <ros/console.h>
 #include <algorithm>
