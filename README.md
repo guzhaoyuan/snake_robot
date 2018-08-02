@@ -40,9 +40,9 @@ Warning: before making any move, make sure the sorvo is not gonna interfere with
 
 ## Hardware Setup
 
-<center><img src="meta/pic/hardware.jpg" width="400"></center>
+<center><img src="meta/pic/hardware.JPG" width="400"></center>
 
-<center><img src="meta/pic/hardware_computer.jpg" width="400"></center>
+<center><img src="meta/pic/hardware_computer.JPG" width="400"></center>
 
 ## Demo
 
