@@ -12,7 +12,7 @@ Ubuntu 16.04 LTS, ROS kinetic, ROS Control.
 
 	# 2. install dynamixel lib
 	git clone https://github.com/ROBOTIS-GIT/DynamixelSDK.git
-	cd DynamixelSDK/build/linux64
+	cd DynamixelSDK/c++/build/linux64
 	make
 	sudo make install
 	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib # add dynamixel lib install path
